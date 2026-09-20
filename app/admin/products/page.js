@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/apiClient";
 import { formatSom } from "@/lib/format";
 import ProductForm from "@/components/admin/ProductForm";
+import { IconBottle } from "@/components/icons";
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState(null);
@@ -74,7 +75,9 @@ export default function AdminProductsPage() {
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={product.image_url} alt={product.name} className="h-full w-full object-cover" />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center text-xl">💄</div>
+                    <div className="flex h-full w-full items-center justify-center" style={{ color: "var(--brand)" }}>
+                      <IconBottle size={22} />
+                    </div>
                   )}
                 </div>
                 <div className="min-w-0 flex-1">

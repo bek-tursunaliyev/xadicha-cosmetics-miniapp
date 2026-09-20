@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
     >
       <head>
-        <Script src="https://telegram.org/js/telegram-web-app.js" strategy="afterInteractive" />
+        <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
       </head>
       <body className="min-h-full flex flex-col">
         <AppProvider>

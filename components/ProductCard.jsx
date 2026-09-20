@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { formatSom } from "@/lib/format";
 import { useCart } from "./CartProvider";
+import { IconBottle } from "./icons";
 
 export default function ProductCard({ product }) {
   const { items, addItem, setQuantity } = useCart();
@@ -16,7 +17,9 @@ export default function ProductCard({ product }) {
           // eslint-disable-next-line @next/next/no-img-element
           <img src={product.image_url} alt={product.name} className="h-full w-full object-cover" />
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-3xl">💄</div>
+          <div className="flex h-full w-full items-center justify-center" style={{ color: "var(--brand)" }}>
+            <IconBottle size={32} />
+          </div>
         )}
       </Link>
       <div className="flex flex-1 flex-col gap-1 p-2.5">

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/apiClient";
+import { IconCheck } from "@/components/icons";
 
 export default function AdminSettingsPage() {
   const [form, setForm] = useState({ address: "", latitude: "", longitude: "", map_url: "" });
@@ -69,7 +70,7 @@ export default function AdminSettingsPage() {
       </div>
 
       <button className="btn btn-primary" disabled={saving}>
-        {saving ? "Saqlanmoqda..." : saved ? "Saqlandi ✓" : "Saqlash"}
+        {saving ? "Saqlanmoqda..." : saved ? (<><IconCheck size={16} /> Saqlandi</>) : "Saqlash"}
       </button>
     </form>
   );

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/components/CartProvider";
 import { formatSom } from "@/lib/format";
+import { IconCart, IconBottle, IconX } from "@/components/icons";
 
 export default function CartPage() {
   const { items, setQuantity, removeItem, totals, hydrated } = useCart();
@@ -12,7 +13,7 @@ export default function CartPage() {
   if (hydrated && items.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center gap-3 px-6 py-24 text-center">
-        <span className="text-4xl">🛒</span>
+        <IconCart size={40} style={{ color: "var(--muted)" }} />
         <p style={{ color: "var(--muted)" }}>Savatingiz bo&apos;sh</p>
         <Link href="/" className="btn btn-primary">
           Xarid qilishni boshlash
@@ -33,14 +34,16 @@ export default function CartPage() {
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={item.image_url} alt={item.name} className="h-full w-full object-cover" />
               ) : (
-                <div className="flex h-full w-full items-center justify-center text-xl">💄</div>
+                <div className="flex h-full w-full items-center justify-center" style={{ color: "var(--brand)" }}>
+                  <IconBottle size={22} />
+                </div>
               )}
             </div>
             <div className="flex flex-1 flex-col">
               <div className="flex items-start justify-between gap-2">
                 <span className="text-sm font-medium">{item.name}</span>
-                <button onClick={() => removeItem(item.product_id)} className="text-sm" style={{ color: "var(--muted)" }}>
-                  ✕
+                <button onClick={() => removeItem(item.product_id)} style={{ color: "var(--muted)" }}>
+                  <IconX size={16} />
                 </button>
               </div>
               <span className="text-sm font-semibold" style={{ color: "var(--brand-dark)" }}>

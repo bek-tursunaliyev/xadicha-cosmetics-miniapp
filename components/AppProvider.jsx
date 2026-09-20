@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { initTelegramWebApp } from "@/lib/telegramClient";
+import { initTelegramWebApp, waitForTelegramWebApp, getTelegramDiagnostics } from "@/lib/telegramClient";
 import { apiFetch } from "@/lib/apiClient";
 
 const AppContext = createContext(null);
@@ -10,6 +10,7 @@ export function AppProvider({ children }) {
   const [status, setStatus] = useState("loading"); // loading | ready | error
   const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [errorInfo, setErrorInfo] = useState(null);
 
   const refreshUser = useCallback(async () => {
     const data = await apiFetch("/api/me");
@@ -19,14 +20,19 @@ export function AppProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    initTelegramWebApp();
-    refreshUser()
-      .then(() => setStatus("ready"))
-      .catch(() => setStatus("error"));
+    waitForTelegramWebApp().then(() => {
+      initTelegramWebApp();
+      refreshUser()
+        .then(() => setStatus("ready"))
+        .catch((err) => {
+          setErrorInfo({ message: err.message, status: err.status, ...getTelegramDiagnostics() });
+          setStatus("error");
+        });
+    });
   }, [refreshUser]);
 
   return (
-    <AppContext.Provider value={{ status, user, isAdmin, refreshUser }}>
+    <AppContext.Provider value={{ status, user, isAdmin, errorInfo, refreshUser }}>
       {children}
     </AppContext.Provider>
   );

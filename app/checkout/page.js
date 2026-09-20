@@ -6,6 +6,7 @@ import { useCart } from "@/components/CartProvider";
 import { useApp } from "@/components/AppProvider";
 import { apiFetch } from "@/lib/apiClient";
 import { formatSom } from "@/lib/format";
+import { IconMapPin } from "@/components/icons";
 
 function CheckoutForm({ user, items, totals, clear }) {
   const router = useRouter();
@@ -96,7 +97,8 @@ function CheckoutForm({ user, items, totals, clear }) {
           placeholder="Shahar, tuman, ko'cha, uy"
         />
         <button type="button" onClick={shareLocation} className="btn btn-outline mt-2 w-full text-sm">
-          📍 {coords ? "Joylashuv biriktirildi" : "Joylashuvni yuborish (ixtiyoriy)"}
+          <IconMapPin size={16} />
+          {coords ? "Joylashuv biriktirildi" : "Joylashuvni yuborish (ixtiyoriy)"}
         </button>
       </div>
 

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useApp } from "@/components/AppProvider";
 import { apiFetch } from "@/lib/apiClient";
 import { formatSom, formatDate, ORDER_STATUS_LABELS } from "@/lib/format";
+import { IconCheck, IconSettings } from "@/components/icons";
 
 function ProfileForm({ user, onSaved }) {
   const [form, setForm] = useState({ phone: user.phone || "", address: user.address || "" });
@@ -47,7 +48,7 @@ function ProfileForm({ user, onSaved }) {
         />
       </div>
       <button className="btn btn-primary" disabled={saving}>
-        {saving ? "Saqlanmoqda..." : saved ? "Saqlandi ✓" : "Saqlash"}
+        {saving ? "Saqlanmoqda..." : saved ? (<><IconCheck size={16} /> Saqlandi</>) : "Saqlash"}
       </button>
     </form>
   );
@@ -76,7 +77,7 @@ export default function AccountPage() {
 
       {isAdmin && (
         <Link href="/admin" className="btn btn-secondary w-full">
-          ⚙️ Admin panelga o&apos;tish
+          <IconSettings size={16} /> Admin panelga o&apos;tish
         </Link>
       )}
 

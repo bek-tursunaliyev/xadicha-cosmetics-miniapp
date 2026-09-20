@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { apiFetch } from "@/lib/apiClient";
 import { formatSom } from "@/lib/format";
 import { useCart } from "@/components/CartProvider";
+import { IconBottle } from "@/components/icons";
 
 export default function ProductPage() {
   const { id } = useParams();
@@ -40,7 +41,9 @@ export default function ProductPage() {
           // eslint-disable-next-line @next/next/no-img-element
           <img src={product.image_url} alt={product.name} className="h-full w-full object-cover" />
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-5xl">💄</div>
+          <div className="flex h-full w-full items-center justify-center" style={{ color: "var(--brand)" }}>
+            <IconBottle size={48} />
+          </div>
         )}
       </div>
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import { apiFetch } from "@/lib/apiClient";
 import { formatSom, formatDate, ORDER_STATUS_LABELS } from "@/lib/format";
+import { IconCheckCircle } from "@/components/icons";
 
 export default function OrderDetailPage() {
   const { id } = useParams();
@@ -24,8 +25,9 @@ export default function OrderDetailPage() {
   return (
     <div className="flex flex-col gap-4 px-4 pt-4 pb-6">
       {success && (
-        <div className="card p-4 text-center" style={{ background: "var(--brand-soft)" }}>
-          <p className="font-semibold" style={{ color: "var(--brand-dark)" }}>✅ Buyurtmangiz qabul qilindi!</p>
+        <div className="card flex flex-col items-center gap-1 p-4 text-center" style={{ background: "var(--brand-soft)" }}>
+          <IconCheckCircle size={26} style={{ color: "var(--success)" }} />
+          <p className="font-semibold" style={{ color: "var(--brand-dark)" }}>Buyurtmangiz qabul qilindi!</p>
         </div>
       )}
 
