@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Xadicha Cosmetics — Telegram Mini App
 
-## Getting Started
+Cosmetics storefront + admin panel as a Telegram Mini App, built with Next.js (App Router, JavaScript) and Neon Postgres.
 
-First, run the development server:
+- Storefront: stories, keyword search, product grid, cart, checkout
+- Account: profile, address, order history
+- Admin (gated by `ADMIN_TELEGRAM_ID`): products, stories, orders, shop settings
+- Auth: Telegram WebApp `initData`, HMAC-validated server-side (`lib/telegram.js`)
+- Prices are in UZS (so'm) only
+
+## Local development
 
 ```bash
+npm install
+npm run db:migrate   # applies db/schema.sql to DATABASE_URL
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Env vars live in `.env.local` (see `.env.example`). Outside production, requests can authenticate
+with an `x-dev-telegram-id: <id>` header instead of real Telegram `initData`, so the app can be
+clicked through in a normal browser tab while building it — see `lib/telegramClient.js`.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Telegram bot setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+After deploying, point the bot's webhook and menu button at the live URL:
 
-## Learn More
+```bash
+npm run telegram:setup
+```
 
-To learn more about Next.js, take a look at the following resources:
+Reads `TELEGRAM_BOT_TOKEN`, `APP_URL`, and `TELEGRAM_WEBHOOK_SECRET` from `.env.local`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deployed on Vercel with a Neon Postgres database provisioned through the Vercel Marketplace.
+`DATABASE_URL` and related vars are injected automatically by that integration; the Telegram
+secrets (`TELEGRAM_BOT_TOKEN`, `ADMIN_TELEGRAM_ID`, `TELEGRAM_WEBHOOK_SECRET`, `APP_URL`) are set
+via `vercel env add`.
